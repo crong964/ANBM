@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="X-UA-Compatible">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="tailwind.css">
+</head>
+<style>
+    .sh {
+        box-shadow: 0px 0px 0px 0px;
+        cursor: pointer;
+    }
+    
+    .sh:hover {
+        box-shadow: 1px 0px 20px 0px;
+    }
+</style>
+
+<body>
+    <div>
+        <p class="text-5xl shadow-fB h-auto bg-red-500 text-center m-4 rounded-xl">Mã hóa</p>
+    </div>
+    <div class="flex justify-center shadow-2xl my-6 text-xl">
+        <label for="encry" class="mr-7">Chọn phương thức mã hóa </label>
+        <select name="categery " id="encry">
+        <option value="Ceasar" >Ceasar</option>
+        <option value="Apphin">Apphin</option>
+        <option value="Subtitution" >Subtitution</option>
+        <option value="Vigere" >Vigere</option>
+        <option value="Hill" >Hill</option>
+        <option value="RSA"selected>RSA</option>
+        </select>
+    </div>
+    <div class="flex p-3 shadow-fB rounded-lg m-4">
+        <div class="w-1/2 inline-block text-xl border-r-2">
+            <p class="text-2xl text-center "> Nội dung chưa mã hóa </p>
+            <div class="flex items-center ">
+                <div class="relative w-full my-5 mr-2">
+                    <input type="text" placeholder="khóa bí mật " id="PK" class="w-full my-5 p-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" id="removeKey" class="sh rounded-full  absolute top-1/3 right-0" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+                </div>
+                <label for="key">
+                    <input  type="file" id="key" class="hidden">
+                    <p class="border border-red-500 p-3  w-max">file chứa khóa</p>
+                </label>
+                <button title="tạo khóa mới"> 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" id="resetKey" class=" sh" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                  </svg>
+                </button>
+                <button class="copy border border-red-500 p-3">
+                    Copy
+                </button>
+            </div>
+
+            <div class="relative">
+                <textarea oninput="auto_grow(this)" name="mess" id="mess" placeholder="nhập nội dung cần mã hóa" class="w-full p-2"></textarea>
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="sh rounded-full removeText absolute top-0 right-0" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                      </svg>
+            </div>
+
+        </div>
+        <div class="w-1/2 inline-block text-xl">
+            <p class="text-2xl text-center "> Nội dung đã mã hóa </p>
+            <textarea oninput="auto_grow(this)" placeholder="nội dung đã mã hóa" name="mess" id="messEn" rows="5" class="mt-3 w-11/12 p-2"></textarea>
+            <button class="float-right p-1 sh mr-1" id="cpMessEn">
+                copy
+            </button>
+        </div>
+    </div>
+</body>
+<script src="Alphabet.js"></script>
+<script src="Ceasar.js"></script>
+<script src="Subtitution.js"></script>
+<script src="Vigenere.js"></script>
+<script src="Apphin.js"></script>
+<script src="Hill.js"></script>
+<script src="RSA.js"></script>
+<script>
+    var mess = document.getElementById("mess");
+    var messEn = document.getElementById("messEn");
+    var PK = document.getElementById("PK");
+    var categery = document.getElementById("encry")
+    var copy = document.querySelector('.copy');
+    var file = document.getElementById("key");
+    var removeText = document.querySelector(".removeText");
+    var resetKey = document.getElementById("resetKey");
+    var removeKey = document.getElementById("removeKey");
+    var cpMessEn = document.getElementById("cpMessEn");
+
+
+    removeKey.addEventListener("click", () => {
+        PK.value = "";
+    })
+
+    resetKey.addEventListener("click", () => {
+        switch (categery.value) {
+            case "Ceasar":
+                PK.value = renderKeyCeasarRandom();
+                break;
+            case "Subtitution":
+                debugger
+                PK.value = renderKySubtitutionRamdom();
+                break;
+            case "Vigere":
+                PK.value = renderKeyVigenRandom();
+                break;
+            case "Apphin":
+                PK.value = renderKeyApphinRandom();
+                break;
+            case "Hill":
+                PK.value = "ddcf"
+                break;
+            case "RSA":
+                var rsa = new RSA();
+                rsa.CreateKey();
+                PK.value = `${rsa.e}_${rsa.n}`
+                localStorage.setItem(`${rsa.e}_${rsa.n}`, `${rsa.d}_${rsa.n}`)
+                break;
+        }
+    })
+
+    removeText.addEventListener("click", () => {
+        mess.value = "";
+        messEn.value = "";
+    })
+    file.addEventListener("change", () => {
+        var read = new FileReader();
+        read.onloadend = () => {
+            PK.value = read.result;
+            var a = new ArrayBuffer(read.result.length);
+            var s = new DataView(a);
+            s.setInt8()
+            console.log(a.byteLength);
+        }
+
+        read.readAsDataURL(file.files[0]);
+    })
+    cpMessEn.addEventListener("click", () => {
+        messEn.focus();
+        messEn.select();
+        try {
+            var successful = document.execCommand('copy');
+            alert("đoạn mã hóa đã được copy");
+
+        } catch (err) {
+
+        }
+    })
+    copy.addEventListener("click", () => {
+        PK.focus();
+        PK.select();
+
+        try {
+            var successful = document.execCommand('copy');
+
+
+        } catch (err) {
+
+        }
+    })
+    mess.addEventListener("keyup", () => {
+        switch (categery.value) {
+            case "Ceasar":
+                messEn.value = chuoiMaHoaCeasar(mess.value, PK.value);
+                break;
+            case "Subtitution":
+                messEn.value = chuoiMaHoaSubtitution(mess.value, PK.value);
+                break;
+            case "Vigere":
+
+                messEn.value = chuoiMaHoaVigere(mess.value, PK.value);
+                break;
+            case "Apphin":
+                let s = convertCharToNumber(PK.value);
+                debugger
+                if (!isKeyApphin(PK.value)) {
+                    alert("khóa của mã hóa Apphin sai");
+                    return;
+                }
+                messEn.value = chuoiMaHoaApphin(s.aKey, s.bKey, mess.value);
+                break;
+            case "Hill":
+                messEn.value = chuoiMaHoaHill(mess.value, PK.value);
+                break;
+            case "RSA":
+                let rsa = new RSA();
+                let s1 = PK.value;
+                let arrayS = s1.split("_");
+                rsa.set(arrayS[0], 0, arrayS[1]);
+                messEn.value = rsa.EncryString(mess.value);
+                break;
+        }
+
+    })
+    messEn.addEventListener("keyup", () => {
+        switch (categery.value) {
+            case "Ceasar":
+                mess.value = chuoiGiaiMaCeasar(messEn.value, PK.value);
+                break;
+            case "Subtitution":
+                mess.value = chuoiGiaiMaSubtitution(messEn.value, PK.value);
+                break;
+            case "Vigere":
+                debugger
+                mess.value = chuoiGiaiHoaVigere(messEn.value, PK.value);
+                break;
+            case "Apphin":
+                let s = convertCharToNumber(PK.value);
+                mess.value = chuoiGiaiMaApphin(s.aKey_Nghich, s.bKey, messEn.value);
+                break;
+            case "Hill":
+                mess.value = chuoiGiaiMaHill(messEn.value, PK.value);
+                break;
+            case "RSA":
+                let rsa = new RSA();
+                let s1 = localStorage.getItem(PK.value);
+                let arrayS = s1.split("_");
+                rsa.set(0, arrayS[0], arrayS[1]);
+                mess.value = rsa.DeEncryString(messEn.value);
+                break;
+        }
+    })
+
+    function auto_grow(element) {
+        element.style.height = (element.scrollHeight) + "px";
+    }
+</script>
+
+
+</html>
